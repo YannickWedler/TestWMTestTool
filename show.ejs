@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>show</title>
+</head>
+<body>
+<div id="logBody">
+<% if (urlForm !== null) {%>
+    <p><%= urlForm %></p>
+<% } %>
+
+<% if (error !== null) {%>
+<p><%= error %></p>
+<% } %>
+
+<% if (requestString !== null) {%>
+<p><%- requestString %></p>
+<% } %>
+</div>
+</body>
+</html>
