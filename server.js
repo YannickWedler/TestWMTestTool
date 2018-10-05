@@ -14,7 +14,6 @@ const bodyParser = require('body-parser');
 //create Request
 const request = require('request');
 //
-var pageObject = "//";
 /* express won't use us css file by default, we must expose it
  we expose public folder -> everything in there can be used now */
 app.use(express.static('public'));
@@ -41,7 +40,7 @@ app.post('/', function(req, res) {
         } else {
             phantomStart(urlForm);
             console.log("pageObject in Show: ");
-            res.render('show', {urlForm: urlForm, error: null, pageObject: pageObject, requestString: requestString});
+            res.render('show', {urlForm: urlForm, error: null, requestString: requestString});
             //console.log('logBody: ', (body));
         }
     });
@@ -74,6 +73,13 @@ function phantomStart(urlForm) {
 })//
 .then(function(status) {
     console.log("get Status: ", status);
+    if (status === "success") {
+        //app.render('getJsonView', {receivedString: receivedString, requestString: requestString});
+        app.get('/', function(req, res) {
+            res.render('getJsonView');
+        });
+        console.log("getJsonView");
+    }
     return _page.property('content');
 })
 .then(function(content){
@@ -97,8 +103,7 @@ function phantomStart(urlForm) {
                 console.log('Saved Request!');
             });
         });
-        //get RequestErros
-        //get Errors
+        //get RequestErrors
         page.on('onResourceError', function(resourceError) {
             requestErrString += JSON.stringify(resourceError, null, 4);
             fs.writeFileSync('requestErrorJson.txt', requestErrString, function(err) {
@@ -120,6 +125,7 @@ function phantomStart(urlForm) {
     }
 
     //evaluate data
+
 
 }
 
